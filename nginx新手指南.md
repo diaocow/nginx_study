@@ -1,4 +1,3 @@
-nginx新手指南
 
 ###nginx 概述
 
