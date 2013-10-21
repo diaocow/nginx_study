@@ -44,4 +44,8 @@ nginx默认把日志都输出都到一个文件中，随着网站访问量不断
 
 关于crontab命令可以参看我之前总结的一篇文章：http://diaocow.iteye.com/admin/blogs/1620541
 
+----
+
+本文内容参考张宴《实战Nginx》3.3.3节
+
 
