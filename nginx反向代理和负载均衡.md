@@ -2,11 +2,9 @@
 
 在生产环境中，我们通常使用nginx处理静态资源（譬如，图片或者静态网页），而对于一些动态请求，会让nginx把它转发给其他服务器处理（譬如Jboss，Tomcat等），并将它们的处理结果返回给客户端，这样nginx就充当了**反向代理**的角色， 那具体如何配置呢？
 
-第一步：用python写一个简单的服务器程序（暂且称它为tiny_server），然后监听在9090端口
+第一步：用python写一个简单的服务器程序（暂且称它为tiny_server），然后监听在9090端口，启动命令：
 
 ```sh
-	tiny_server启动命令：
-
 	python tiny_server 127.0.0.1 9090 "Hello, Nginx!"  # ip port msg
 ```
 
@@ -52,11 +50,6 @@
 		server 127.0.0.1:9090;
 		server 127.0.0.1:9091;				
 	}
-
-	启动tiny_server:
-
-	python tiny_server 127.0.0.1 9090 "hello, i am 9090"
-	python tiny_server 127.0.0.1 9091 "hello, i am 9091"
 ```
 
 第二步： 设置反向代理
@@ -71,3 +64,16 @@
 ```
 
 第三步: 启动（重启）nginx，并访问：http://localhost/，这时候发现两台提供服务的tiny_server确实被轮询了
+
+启动tiny_server
+
+```sh
+	# 启动ting_server
+	python tiny_server 127.0.0.1 9090 "hello, i am 9090"
+	python tiny_server 127.0.0.1 9091 "hello, i am 9091"
+	
+	# 重载配置
+	sudo nginx -s reload
+	
+	# 访问目标url
+```
