@@ -26,10 +26,10 @@ nginx默认提供了一种日志格式combined：
     
 我们也可以定义自己的日志格式（这样可以方便我们使用一些命令（譬如awk)分析日志）:
 
-    log_format my_log_name ...
+    log_format my_log_name ...  
     
-    log_format diaocow_log  '[$remote_addr]==[$remote_user]==$[time_local]=='                                                                                         
-                            '[$request]==$[status]==[$body_bytes_sent]=='
+    log_format diaocow_log  '[$remote_addr]==[$remote_user]==$[time_local]=='
+                            '[$request]==$[status]==[$body_bytes_sent]==
                             '[$http_referer]==[$http_user_agent]';
                         
 这时候输出的日志格式将会变成
