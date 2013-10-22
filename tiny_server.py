@@ -28,14 +28,15 @@ class HTTPServer(object):
             try:   
                 buf = conn.recv(2048)  
                 print buf
-                conn.send(self.msg)  
+                conn.send(self.msg + '\n')  
   
-            except socket.timeout:  
-			conn.close()  
-
-
+            except socket.timeout, e:  
+                raise e 
+            finally:
+                conn.close()
+                          
 
 if (len(sys.argv) < 4):
-	print 'params error, please input: python tiny_server 127.0.0.1 8080 "hello, nginx"'
+        print 'params error, please input: python tiny_server 127.0.0.1 8080 "hello, nginx"'
 else:
-	HTTPServer((sys.argv[1], int(sys.argv[2])), sys.argv[3]).start()
+        HTTPServer((sys.argv[1], int(sys.argv[2])), sys.argv[3]).start()
