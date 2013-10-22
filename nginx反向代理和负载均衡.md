@@ -65,8 +65,6 @@
 
 第三步: 启动（重启）nginx，并访问：http://localhost/，这时候发现两台提供服务的tiny_server确实被轮询了
 
-启动tiny_server
-
 ```sh
 	# 启动ting_server
 	python tiny_server 127.0.0.1 9090 "hello, i am 9090"
