@@ -22,9 +22,10 @@
 
 第三步：启动tiny_server、nginx并访问：http://localhost/
 
+```sh
     diaocow@ubuntu:~$ curl "http://localhost/"
     Hello, Nginx
-
+```
 
 ###负载均衡
 
