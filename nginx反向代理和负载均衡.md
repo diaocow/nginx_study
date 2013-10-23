@@ -27,6 +27,25 @@
     Hello, Nginx
 ```
 
+
+默认情况下，反向代理是不会转发请求头中**原生**的Host字段，如果需要转发，必须加上：*proxy_set_header Host $host;*
+
+```sh
+	# 未加proxy_set_header配置
+	GET / HTTP/1.0
+	Host: xxxxx   			# 这个值为配置项proxy_pass后的值
+	User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:14.0) Gecko/20100101 Firefox/14.0.1
+	Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+	...
+
+	# 添加proxy_set_header配置
+	GET / HTTP/1.0
+	Host: 127.0.0.1
+	User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:14.0) Gecko/20100101 Firefox/14.0.1
+	Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+	...
+```
+
 ###负载均衡
 
 随着网站的访问量增加，一台机器可能无法支撑，这个时候我们可以配备一个集群来提供服务，并且使用nginx来提供负载均衡（即，当nginx接受到一个到动态请求，它会按照一定策略（譬如：轮询或者随机）从集群中选出一台机器处理请求）；那如何配置负载均衡呢？
