@@ -69,7 +69,7 @@ web服务器的一个重要功能就是提供静态资源服务（譬如：图�
 ###nginx 代理服务器
 nginx经常被用作反向代理服务器，对于一些动态请求，nginx会把它转发给那些被代理的服务器（也叫上游服务器，譬如JBOSS，Tomcat等），然后把它们处理的结果再返回给客户端；那如何配置反向代理呢？  
 
-TODO 
+[反向代理设置](https://github.com/diaocow/nginx_study/blob/master/nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1.md)
 
 ---
 本文大部分内容来源：http://nginx.org/en/docs/beginners_guide.html
