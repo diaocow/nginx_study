@@ -26,7 +26,7 @@ flag参数可选值：
 	默认值:	rewrite_log off;
 	环境:	http, server, location, if
 
-打开或关闭重写日志，一般仅在开发环境下打开，用于调试规则
+打开或关闭重写日志，一般仅在开发环境下打开，用于调试规则（
 
 	语法:	set variable value;
 	默认值:	 —
@@ -39,3 +39,7 @@ flag参数可选值：
 	环境:	http, server, location, if
 
 对于未初始化变量是否警告（默认打开，这样对于未初始化变量会在错误日志中提示）
+
+---
+
+推荐阅读：http://eyesmore.iteye.com/blog/1142162
