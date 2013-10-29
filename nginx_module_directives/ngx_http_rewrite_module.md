@@ -8,8 +8,8 @@
 
 flag参数可选值：
 
- * last - 停止执行后面的rewrite命令，并用新URI重新查找对应的location块
- * break - 停止执行后面的rewrite命令，顺序向下执行location块中其他命令
+ * last - 跳过后面的rewrite命令，并用新URI重新查找对应的location块
+ * break - 跳过后面的rewrite命令，顺序向下执行location块中其他命令
  * redirect - 返回302状态码，重定向客户端到新的URI（显式重定向标记）
  * permanent - 返回301状态码，重定向客户端到新的URI（显式重定向标记）
 
