@@ -19,6 +19,49 @@ flag参数可选值：
 
 当正则中包含"}"或者";"这些字符时，整个正则表达式需要用单引号或者双引号括起来（因为这两个字符在niginx配置文件中有特殊含义，不用引号括起来，会当做语法字符解析）；
 
+下面我们看个例子：
+
+```sh
+	server {
+        listen 80; 
+        root /home/diaocow;         
+
+        location /aaa  {
+            rewrite ^/aaa.htm$ /bbb.htm;
+            rewrite ^/bbb.htm$ /ccc.htm break;
+            return 200 hello_world;  # 若break条件匹配，该命令被跳过
+        }   
+
+        location /bbb {
+            rewrite ^/bbb.htm$ /ccc.htm last;
+            rewrite ^/ccc.htm$ /ddd.htm ; # 若break条件匹配，该命令被跳过
+            rewrite ^(.*)$ /bbb_loop/$1 ; # 死循环                                                               
+
+        }   
+        location / { 
+        }   
+    }   
+```
+我们测试不同URI，看下执行结果：
+```sh
+	$ curl http://127.0.0.1/aaa.htm
+	I am ccc.htm
+	$ curl http://127.0.0.1/aaa_other.htm
+	hello_world
+	$ curl http://127.0.0.1/bbb.htm
+	I am ccc.htm
+	$ curl http://127.0.0.1/bbb_ccc.htm
+	I am ddd.htm
+	$ curl http://127.0.0.1/bbb_other.htm
+	<html>
+	<head><title>500 Internal Server Error</title></head>
+	<body bgcolor="white">
+	<center><h1>500 Internal Server Error</h1></center>
+	<hr><center>nginx/1.1.19</center>
+	</body>
+	</html>
+
+```
 
 	语法:	rewrite_log on | off;
 	默认值:	rewrite_log off;
