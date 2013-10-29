@@ -28,3 +28,44 @@ nginx提供两种规则来进行URI匹配：
 也就说，若匹配出来的**最大匹配前缀**所在的location块，使用了= 或者 ^~运算符，那么nginx直接用该location块作为匹配过程的最终结果（在早期版本：0.7.1 to 0.8.41，即使你没有使用这些运算符，但是匹配出来最大前缀与URI一模一样，那么nginx也会停止后面的正则匹配）
 
 说了这么多理论，我们看个例子，加强理解：
+
+```sh
+    server {
+        listen 80; 
+
+        location  /test {
+            echo "hello_1";
+        }   
+
+        location ^~ /test/hello {
+            echo "hello_2";
+        }   
+
+        location  = /test/hello.htm {
+            echo "hello_3";
+        }   
+
+        location  /test/hello_world.htm {
+            echo "hello_4";
+        }   
+
+        location  ~ /test/hell.* {                                                                               
+            echo "hello_5";
+        }   
+    }   
+```
+测试这段配置（nginx版本：1.1.19）：
+
+```sh
+    diaocow@diaocow-pc:~$ curl http://127.0.0.1/test/hello.htm
+    hello_3
+    diaocow@diaocow-pc:~$ curl http://127.0.0.1/test/hellooo.htm
+    hello_2
+    diaocow@diaocow-pc:~$ curl http://127.0.0.1/test/hello_world.htm
+    hello_5
+    diaocow@diaocow-pc:~$ curl http://127.0.0.1/test/helllll.htm
+    hello_5
+    diaocow@diaocow-pc:~$ curl http://127.0.0.1/test/nginx.htm
+    hello_1
+
+```
