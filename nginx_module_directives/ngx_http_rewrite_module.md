@@ -57,11 +57,7 @@ flag参数可选值：
 	$ curl http://127.0.0.1/bbb_other.htm
 	<html>
 	<head><title>500 Internal Server Error</title></head>
-	<body bgcolor="white">
-	<center><h1>500 Internal Server Error</h1></center>
-	<hr><center>nginx/1.1.19</center>
-	</body>
-	</html>
+	... 省略
 ```
 
 ####rewrite_log命令
@@ -128,7 +124,41 @@ if中的condition条件可以是以下几种形式：
  * 检测文件是否存在： -f 或者 !-f
  * 检测目录是否存在： -d 或者 !-d
  * ...
+ * 
+```sh
 
+	server {
+		listen 80;
+		
+		location / {
+		    if ($request_uri = "/hello.htm") {
+		        set $return_info "hello, world!";                                                                
+		    }
+		    if ($request_uri = "/per_redirect.htm") {
+		        return 301 /redirect_hello.htm;
+		    }
+		    if ($request_uri ~ \.(gif|jpg)$) {
+		        set $return_info "Oh, sorry, I don't serve pictures'";
+		    }
+		    return 200 $return_info;
+		}
+		
+		location ~ redirect_hello {
+		    return 200  'Oh, You redirect here!';
+		}
+	}
+	
+	执行结果：
+	$ curl http://127.0.0.1/hello.htm
+	hello, world!diaocow@diaocow-pc:~$ 
+	$ curl http://127.0.0.1/hello.jpg
+	Oh, sorry, I don't serve pictures'diaocow@diaocow-pc:~$ 
+	$ curl http://127.0.0.1/per_redirect.htm
+	<html>
+	<head><title>301 Moved Permanently</title></head>
+
+
+```
 nginx不推荐使用if指令（[ifIsEvil](http://wiki.nginx.org/IfIsEvil)），应当优先选择使用tryfiles命令来替代if
 
 ---
