@@ -3,7 +3,7 @@
 ####rewrite命令
 
 
-    	语法:    rewrite regex replacement [flag];
+        语法:    rewrite regex replacement [flag];
 	默认值:	 —
 	环境:	server, location, if
 
@@ -94,11 +94,42 @@ flag参数可选值：
 
 ####uninitialized_variable_warn命令
 
-	语法:	uninitialized_variable_warn on | off;
+    语法:	uninitialized_variable_warn on | off;
 	默认值:	uninitialized_variable_warn on;
 	环境:	http, server, location, if
 
 对于未初始化变量是否警告（默认打开，这样对于未初始化变量会在错误日志中提示）
+
+####return命令
+
+    语法:   return code [text];
+            return code URL;
+            return URL;
+	默认值:	 —
+	环境:	server, location, if
+
+return 命令用来停止后续指令的处理，并使用code作为响应码返回客户端，其中: return code [text] 允许使用一段文本作为响应体返回（如之前例子中所示），特别要注意的是，若你明确希望返回一段文本内容给客户端，那code不能是301， 302，303和307，否则nginx会尝试把这段文本当做一个URI进行重定向；而 return code URL 则用来实现重定向功能（注意这里的code必须为：301，302，303和307中的一种），而且若URL不是以：http://...开头（即可能只是一个URI），则nginx会智能补全URL（使用当前请求协议，主机名以及端口）；最后一种形式：return URL同样可以实现重定向功能，但nginx默认返回302响应码（注意，这里的URL必须是完整格式，nginx不会做智能补全，而是报语法错误：invalid return code）
+
+关于return命令，请看if命令中的例子
+
+####if命令
+
+    语法:   if (condition) { ... }
+    默认值:	 —
+	环境:	server, location
+
+该命令类似一般编程语言中的if语句，也就是说，如果condtion条件为真，那么nginx会执行位于if块中的指令；
+
+if中的condition条件可以是以下几种形式：
+
+ * 变量：如果变量的值一个空串或者为"0"，那么为false，否则为true;
+ * 比较表达式：使用 = 或者 != 进行字符串比较；
+ * 正则表达式：使用 ~ (!~) 或者 ~* (!~*) 进行正则匹配，其中~* 表示忽略大小写的正则匹配；
+ * 检测文件是否存在： -f 或者 !-f
+ * 检测目录是否存在： -d 或者 !-d
+ * ...
+
+nginx不推荐使用if指令（[ifIsEvil](http://wiki.nginx.org/IfIsEvil)），应当优先选择使用tryfiles命令来替代if
 
 ---
 
