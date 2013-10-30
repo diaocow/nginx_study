@@ -72,6 +72,22 @@ flag参数可选值：
 	环境:	server, location, if
 
 设置变量，变量的值可以是字符串，其他变量或者二者的组合
+```sh
+	server {
+		listen 80;
+		
+		set $return_info "hello, diacow!";    # 设置return_info变量                                                                   
+		location / {
+		    return 200 $return_info;
+		}   
+	}   
+	
+	上述配置执行结果：
+	$ curl http://127.0.0.1/
+	hello, diacow!
+```
+
+
 
 	语法:	uninitialized_variable_warn on | off;
 	默认值:	uninitialized_variable_warn on;
