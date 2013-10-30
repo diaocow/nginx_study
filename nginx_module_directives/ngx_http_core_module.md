@@ -1,4 +1,27 @@
-###ngx_http_core_module
+##ngx_http_core_module
+###alias命令
+    
+    语法: alias path;
+    默认值:   —
+    环境: location
+    
+alias命令用来对URI指定部分进行替换，譬如：
+
+    location /img/ {
+        alias /data/w3/images/;
+    }
+
+对与请求/img/gif/top.gif ，nginx会在/data/w3/images/gif目录下查找top.gif文件（/img/被替换成/data/w3/images/并且**作为后续查找资源的根路径**），如果这里使用的不是alias而是root命令，那么nginx会在/data/w3/images/img/gif目录下查找top.gif文件（请体会两者的不同）
+
+alias命令中的path中可以包含变量（除了$document_root和 $realpath_root），并且如果alias所在的loacation块使用了正则，那么它还可以这样使用：
+
+    location ~ ^/download/(.*)$ {
+      alias /home/website/files/$1;
+    }
+
+若请求/download/book.pdf，那么nginx会去/home/website/files目录下查找book.pdf文
+
+###location命令
 
     
     语法: location [ = | ~ | ~* | ^~ ] uri { ... }
@@ -48,9 +71,9 @@ nginx提供两种规则来进行location匹配：
             echo "hello_5";
         }   
     }   
-```
-测试不同的URI
-```sh
+
+    测试不同的URI
+
     $ curl http://127.0.0.1/test/hello.htm
     hello_3
     $ curl http://127.0.0.1/test/hellooo.htm
@@ -64,3 +87,6 @@ nginx提供两种规则来进行location匹配：
 ```
 
 如果你能清晰的分析出执行逻辑，那么我想你对location匹配过程已经非常清楚了 ^_^
+
+###内置变量
+HttpCoreModule中提供了很多变量（譬如：$request_uri）, 它可以用来作为输出日志的一部分，也可以作为表达式出现在配置文件：[变量列表](http://wiki.nginx.org/HttpCoreModule#Variables)
