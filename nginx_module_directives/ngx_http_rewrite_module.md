@@ -1,6 +1,9 @@
-###ngx_http_rewrite_module
+##ngx_http_rewrite_module
 
-    语法:    rewrite regex replacement [flag];
+####rewrite命令
+
+
+    	语法:    rewrite regex replacement [flag];
 	默认值:	 —
 	环境:	server, location, if
 
@@ -61,12 +64,14 @@ flag参数可选值：
 	</html>
 ```
 
+####rewrite_log命令
 	语法:	rewrite_log on | off;
 	默认值:	rewrite_log off;
 	环境:	http, server, location, if
 
 打开或关闭重写日志，一般仅在开发环境下打开，用于调试rewrite规则（注意：重写日志是notice级别）
 
+####set命令
 	语法:	set variable value;
 	默认值:	 —
 	环境:	server, location, if
@@ -87,7 +92,7 @@ flag参数可选值：
 	hello, diacow!
 ```
 
-
+####uninitialized_variable_warn命令
 
 	语法:	uninitialized_variable_warn on | off;
 	默认值:	uninitialized_variable_warn on;
