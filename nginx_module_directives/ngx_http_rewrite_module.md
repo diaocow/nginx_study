@@ -146,13 +146,13 @@ if中的condition条件可以是以下几种形式：
 	执行结果：
 	
 	$ curl http://127.0.0.1/hello.htm
-	hello, world!diaocow@diaocow-pc:~$ 
+	hello, world!
 	$ curl http://127.0.0.1/hello.jpg
 	Oh, sorry, I don't serve pictures
 	$ curl http://127.0.0.1/per_redirect.htm
-    	....
+	....
 	<head><title>301 Moved Permanently</title></head>
-    	# ... 若在浏览器中访问http://127.0.0.1/per_redirect.htm，这时候会显示重定向内容：Oh, You redirect here!
+	# ... 若在浏览器中访问http://127.0.0.1/per_redirect.htm，这时候会显示重定向内容：Oh, You redirect here!
 ```
 另外，nginx不推荐使用if指令（[ifIsEvil](http://wiki.nginx.org/IfIsEvil)），应当优先选择使用tryfiles命令来替代if；
 
