@@ -2,8 +2,7 @@
 
 ####rewrite命令
 
-
-        语法:    rewrite regex replacement [flag];
+    语法:    rewrite regex replacement [flag];
 	默认值:	 —
 	环境:	server, location, if
 
@@ -31,13 +30,11 @@ flag参数可选值：
 	server {
         listen 80; 
         root /home/diaocow;         
-
         location /aaa  {
             rewrite ^/aaa.htm$ /bbb.htm;
             rewrite ^/bbb.htm$ /ccc.htm break;
             return 200 hello_world;  # 若break条件匹配，该命令被跳过
         }   
-
         location /bbb {
             rewrite ^/bbb.htm$ /ccc.htm last;
             rewrite ^(.*)$ /bbb/loop.htm ; # 若last条件匹配，该命令被跳过，否则死循环，然后500错误                                                               
@@ -55,7 +52,7 @@ flag参数可选值：
 	$ curl http://127.0.0.1/bbb.htm
 	I am ccc.htm
 	$ curl http://127.0.0.1/bbb_other.htm
-	<html>
+	...
 	<head><title>500 Internal Server Error</title></head>
 	... 省略
 ```
@@ -76,7 +73,6 @@ flag参数可选值：
 ```sh
 	server {
 		listen 80;
-		
 		set $return_info "hello, diacow!";    # 设置return_info变量                                                                   
 		location / {
 		    return 200 $return_info;
@@ -84,6 +80,7 @@ flag参数可选值：
 	}   
 	
 	上述配置执行结果：
+    
 	$ curl http://127.0.0.1/
 	hello, diacow!
 ```
@@ -124,12 +121,11 @@ if中的condition条件可以是以下几种形式：
  * 检测文件是否存在： -f 或者 !-f
  * 检测目录是否存在： -d 或者 !-d
  * ...
- * 
-```sh
 
+我们来看个例子：
+```sh
 	server {
 		listen 80;
-		
 		location / {
 		    if ($request_uri = "/hello.htm") {
 		        set $return_info "hello, world!";                                                                
@@ -142,24 +138,23 @@ if中的condition条件可以是以下几种形式：
 		    }
 		    return 200 $return_info;
 		}
-		
 		location ~ redirect_hello {
 		    return 200  'Oh, You redirect here!';
 		}
 	}
 	
 	执行结果：
+	
 	$ curl http://127.0.0.1/hello.htm
 	hello, world!diaocow@diaocow-pc:~$ 
 	$ curl http://127.0.0.1/hello.jpg
 	Oh, sorry, I don't serve pictures'diaocow@diaocow-pc:~$ 
 	$ curl http://127.0.0.1/per_redirect.htm
-	<html>
+    ....
 	<head><title>301 Moved Permanently</title></head>
-
-
+    # ... 若在浏览器中访问http://127.0.0.1/per_redirect.htm，这时候会显示重定向内容：Oh, You redirect here!
 ```
-nginx不推荐使用if指令（[ifIsEvil](http://wiki.nginx.org/IfIsEvil)），应当优先选择使用tryfiles命令来替代if
+另外nginx不推荐使用if指令（[ifIsEvil](http://wiki.nginx.org/IfIsEvil)），应当优先选择使用tryfiles命令来替代if
 
 ---
 
