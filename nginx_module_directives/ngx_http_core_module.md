@@ -19,7 +19,7 @@ alias命令中的path中可以包含变量（除了$document_root和 $realpath_r
       alias /home/website/files/$1;
     }
 
-若请求/download/book.pdf，那么nginx会去/home/website/files目录下查找book.pdf文
+若访问/download/book.pdf，那么nginx会去/home/website/files目录下查找book.pdf文
 
 ###location命令
 
