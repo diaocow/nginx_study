@@ -1,5 +1,3 @@
-nginx + uWSGI + webpy 配置以及原理分析
-
 ###配置
 
 webpy代码示例：
