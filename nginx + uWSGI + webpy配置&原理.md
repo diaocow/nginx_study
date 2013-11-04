@@ -73,12 +73,20 @@ uWSGI支持多种协议（包括HTTP协议），所以对于刚才例子，我�
 问题1：proxy_pass指令也是把请求转发给其他服务器处理，并且默认采用HTTP协议（可以理解成，nginx收到什么，它就原封不动的转发什么），而当使用uswgi_pass命令时，nginx会先把请求按照按照uwsgi协议转换，然后再转发；问题2：为什么要要使用uwsgi协议转发？这其实是从效率上考虑的，HTTP协议本身是一个文本协议，虽然它对人很友好（可读性强），但是对计算机来说就不太友好了，解析起来非常耗时，所以在转发之前先把转换成其他协议（通常是二进制协议，譬如这里的uwsgi)；问题3：uWSGI是一个支持WSGI规范的web容器，它支持多种协议，其中一个就是uwsgi协议，所以uWSGI是两个完全不同的东西，只是名称相似而已;
 
 
-至此，相信你对刚才那些配置已经非常清楚，顺便提一下uWSGI还提供了一个工具:uwsgitop命令，用来检测自身运行状态：
+至此，相信你对刚才那些配置已经非常清楚，而且无论是采用uWSGI或者flup部署web应用，又或者采用uwsgi协议还是fastcgi协议，其实它们的本质是一样的，只要我们结合效率以及方便性采取一种最适合的方式即可；顺便提一下uWSGI还提供了一个工具:uwsgitop命令，用来检测自身运行状态：
 
-uwsgi --socket 127.0.0.1:3031 --wsgi-file myflaskapp.py  --processes 4 --threads 2 --stats 127.0.0.1:9191
+    # 下载安装文件：
+    https://github.com/unbit/uwsgitop.git
+    
+    # 启动uWSGI，并添加--stats参数
+    uwsgi ...  --stats 127.0.0.1:9191
+    
+    # 运行uwsgitop命令
+    uwsgitop 127.0.0.1:9191 
 
-
-
+![](https://github.com/diaocow/nginx_study/blob/master/uwsgitop.png)
+    
+你可以在另一个终端执行下面命令： for i in $(seq 100); do curl http://127.0.0.1/hello.htm; done，然后观察数据有何变化
 
 
 
