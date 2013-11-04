@@ -84,7 +84,7 @@ uWSGI支持多种协议（包括HTTP协议），所以对于刚才例子，我�
     # 运行uwsgitop命令
     uwsgitop 127.0.0.1:9191 
 
-![](https://github.com/diaocow/nginx_study/blob/master/uwsgitop.png)
+![](http://github.com/diaocow/nginx_study/raw/master/uwsgitop.png)
     
 你可以在另一个终端执行下面命令： for i in $(seq 100); do curl http://127.0.0.1/hello.htm; done，然后观察数据有何变化
 
