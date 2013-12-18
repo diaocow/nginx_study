@@ -2,7 +2,7 @@
 
 在生产环境中，我们通常使用nginx处理静态资源（譬如，图片或者静态网页），而对于一些动态请求，会让nginx把它转发给其他服务器处理并将它们的处理结果返回给客户端，这样nginx就充当了**反向代理**的角色， 那具体如何配置呢？
 
-第一步：用python写一个简单的服务器程序（暂且称它为tiny_server），然后监听在9090端口：
+第一步：用python写一个简单的服务器程序（暂且称它为[tiny_server](https://github.com/diaocow/nginx_study/blob/master/tiny_server.py)），然后监听在9090端口：
 
 ```sh
     python tiny_server.py 127.0.0.1 9090 "Hello, Nginx"  # ip port msg
